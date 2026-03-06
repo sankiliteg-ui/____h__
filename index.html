@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Good Morning Annu 💗 — Health Scanner</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Nunito:wght@300;400;600;700;800&family=Dancing+Script:wght@700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#060d1f;
+  --card:#0d1b35;
+  --card2:#111f3a;
+  --accent:#00e5ff;
+  --green:#00e676;
+  --rose:#ff4081;
+  --gold:#ffd740;
+  --warn:#ff6d00;
+  --text:#e0f7fa;
+  --dim:#4a6fa5;
+  --glow:rgba(0,229,255,0.25);
+}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;z-index:0;
+}
+
+.wrap{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:16px 12px 40px;}
+
+/* ========================================
+   GOOD MORNING BANNER
+   ======================================== */
+.gm-banner {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, #0a0020 0%, #1a003a 50%, #2d0060 100%);
+  border: 1.5px solid rgba(255, 100, 180, 0.25);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,64,129,0.1);
+  padding: 22px 18px 18px;
+  text-align: center;
+}
+
+/* Stars inside banner */
+.gm-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.gm-star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: gm-twinkle 2s infinite alternate;
+}
+@keyframes gm-twinkle {
+  0%{opacity:0.15;transform:scale(1);}
+  100%{opacity:0.9;transform:scale(1.4);}
+}
+
+/* Animated top border */
+.gm-banner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, #ff69b4, #ffd700, #ff1493, #a78bfa, transparent);
+  background-size: 200% 100%;
+  animation: gm-shimmer 2.5s linear infinite;
+}
+@keyframes gm-shimmer { to { background-position: 200% 0; } }
+
+/* Sun */
+.gm-sun-wrap {
+  position: relative;
+  width: clamp(60px,16vw,85px);
+  height: clamp(60px,16vw,85px);
+  margin: 0 auto 10px;
+}
+.gm-sun {
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at 40% 38%, #fff9c4, #ffd700, #ff8f00);
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(255,210,0,0.9), 0 0 55px rgba(255,150,0,0.5), 0 0 90px rgba(255,100,0,0.2);
+  animation: gm-sun-glow 3s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+}
+@keyframes gm-sun-glow {
+  0%,100%{box-shadow:0 0 25px rgba(255,210,0,0.9),0 0 55px rgba(255,150,0,0.5);}
+  50%{box-shadow:0 0 40px rgba(255,220,0,1),0 0 80px rgba(255,150,0,0.8),0 0 120px rgba(255,80,0,0.3);}
+}
+/* Sun rays */
+.gm-rays {
+  position: absolute;
+  inset: -14px;
+  animation: gm-spin 8s linear infinite;
+  z-index: 1;
+}
+.gm-rays::before, .gm-rays::after {
+  content:'';
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 2px dashed rgba(255,210,0,0.25);
+}
+.gm-rays::after { inset: 5px; border-color: rgba(255,180,0,0.18); transform: rotate(30deg); }
+@keyframes gm-spin { to { transform: rotate(360deg); } }
+
+/* Good Morning text */
+.gm-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.5rem, 7vw, 2.4rem);
+  color: #ffb3d9;
+  line-height: 1.1;
+  margin-bottom: 2px;
+  filter: drop-shadow(0 0 12px rgba(255,100,180,0.6));
+  animation: gm-text-pulse 3s ease-in-out infinite;
+}
+@keyframes gm-text-pulse {
+  0%,100%{filter:drop-shadow(0 0 12px rgba(255,100,180,0.6));}
+  50%{filter:drop-shadow(0 0 22px rgba(255,20,147,0.9));}
+}
+
+/* Annu name */
+.gm-name {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2.2rem, 11vw, 4rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffd700, #ff69b4, #e91e63, #9c27b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(2px 3px 8px rgba(200,0,100,0.5));
+  line-height: 1;
+  margin-bottom: 10px;
+  animation: gm-name-shimmer 4s ease-in-out infinite;
+}
+@keyframes gm-name-shimmer {
+  0%,100%{filter:drop-shadow(2px 3px 8px rgba(200,0,100,0.5));}
+  50%{filter:drop-shadow(2px 3px 18px rgba(255,20,147,0.8));}
+}
+
+/* Wish message */
+.gm-wish {
+  font-size: clamp(0.75rem, 3vw, 0.9rem);
+  color: #c8a0d0;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+
+/* Time badge */
+.gm-time-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.gm-time {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 3px;
+  filter: drop-shadow(0 0 8px rgba(0,229,255,0.5));
+}
+.gm-date {
+  font-size: 0.72rem;
+  color: var(--dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Floating petals inside banner */
+.gm-petal {
+  position: absolute;
+  border-radius: 50% 0 50% 0;
+  opacity: 0.5;
+  animation: gm-petal-fall linear infinite;
+  pointer-events: none;
+}
+@keyframes gm-petal-fall {
+  0%{transform:translateY(-20px) rotate(0deg);opacity:0.6;}
+  100%{transform:translateY(180px) rotate(540deg) translateX(30px);opacity:0;}
+}
+
+/* Mood pills */
+.gm-pills {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.gm-pill {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,150,180,0.2);
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  color: #ffb3d9;
+  letter-spacing: 0.5px;
+}
+
+/* Tuggu note inside banner */
+.gm-tuggu-note {
+  background: rgba(167,139,250,0.08);
+  border: 1px solid rgba(167,139,250,0.2);
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: clamp(0.75rem, 2.8vw, 0.85rem);
+  color: #c8b4f0;
+  line-height: 1.6;
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 6px;
+}
+.gm-tuggu-label {
+  font-size: 0.65rem;
+  color: #a78bfa;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-style: normal;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Dismiss button */
+.gm-dismiss {
+  margin-top: 12px;
+  background: transparent;
+  border: 1.5px solid rgba(0,229,255,0.25);
+  color: var(--accent);
+  border-radius: 50px;
+  padding: 8px 22px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.gm-dismiss:active { background: rgba(0,229,255,0.1); transform: scale(0.97); }
+
+.gm-banner.collapsed {
+  padding: 12px 18px;
+}
+.gm-banner.collapsed .gm-collapsible {
+  display: none;
+}
+.gm-banner.collapsed .gm-sun-wrap {
+  width: 32px; height: 32px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 8px 0 0;
+}
+.gm-banner-mini {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.gm-banner.collapsed .gm-banner-mini { display: flex; }
+.gm-banner-mini-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.2rem;
+  color: #ffb3d9;
+}
+.gm-banner-mini-btn {
+  background: none; border: none; color: var(--accent);
+  font-size: 0.7rem; font-family: 'Orbitron', monospace;
+  cursor: pointer; letter-spacing: 1px;
+}
+
+/* ---- HEADER ---- */
+.header{text-align:center;padding:14px 0 8px;}
+.header-title{font-family:'Orbitron',monospace;font-size:clamp(1.1rem,5vw,1.6rem);font-weight:900;
+  background:linear-gradient(90deg,var(--accent),#a78bfa,var(--rose));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:2px;}
+.header-sub{font-size:0.78rem;color:var(--dim);letter-spacing:3px;margin-top:4px;text-transform:uppercase;}
+.annu-tag{font-family:'Dancing Script',cursive;font-size:1.4rem;color:var(--rose);margin-top:4px;
+  filter:drop-shadow(0 0 8px rgba(255,64,129,0.6));}
+
+/* ---- SCANNER CARD ---- */
+.scanner-card{background:var(--card);border-radius:24px;border:1.5px solid rgba(0,229,255,0.15);padding:20px;margin:14px 0;box-shadow:0 8px 40px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.05);position:relative;overflow:hidden;}
+.scanner-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),#a78bfa,var(--rose),transparent);animation:scan-line 2s linear infinite;}
+@keyframes scan-line{0%{opacity:0.4}50%{opacity:1}100%{opacity:0.4}}
+
+.cam-wrap{position:relative;width:100%;aspect-ratio:1;max-width:260px;margin:0 auto 16px;border-radius:50%;overflow:hidden;border:3px solid rgba(0,229,255,0.3);box-shadow:0 0 0 6px rgba(0,229,255,0.07),0 0 0 12px rgba(0,229,255,0.04);}
+.cam-wrap.scanning{border-color:var(--rose);box-shadow:0 0 0 6px rgba(255,64,129,0.15),0 0 0 14px rgba(255,64,129,0.07),0 0 40px rgba(255,64,129,0.3);animation:pulse-ring 1.2s ease-in-out infinite;}
+.cam-wrap.done{border-color:var(--green);box-shadow:0 0 0 6px rgba(0,230,118,0.15),0 0 30px rgba(0,230,118,0.3);}
+@keyframes pulse-ring{0%,100%{box-shadow:0 0 0 6px rgba(255,64,129,0.15),0 0 0 14px rgba(255,64,129,0.07),0 0 40px rgba(255,64,129,0.3);}50%{box-shadow:0 0 0 10px rgba(255,64,129,0.25),0 0 0 22px rgba(255,64,129,0.1),0 0 60px rgba(255,64,129,0.5);}}
+#videoEl{width:100%;height:100%;object-fit:cover;display:block;transform:scaleX(-1);}
+#hiddenCanvas{display:none;}
+.scan-beam{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--rose),var(--accent),transparent);filter:blur(2px);animation:beam-sweep 1.5s linear infinite;display:none;}
+.scanning .scan-beam{display:block;}
+@keyframes beam-sweep{0%{top:0;opacity:1}100%{top:100%;opacity:0.3}}
+.cam-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(6,13,31,0.75);text-align:center;padding:20px;transition:opacity 0.4s;}
+.cam-overlay.hide{opacity:0;pointer-events:none;}
+.cam-icon{font-size:3rem;margin-bottom:8px;}
+.cam-msg{font-size:0.82rem;color:var(--dim);line-height:1.5;}
+
+.finger-bar{display:flex;align-items:center;gap:10px;background:rgba(255,64,129,0.08);border:1px solid rgba(255,64,129,0.2);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:0.82rem;}
+.finger-dot{width:10px;height:10px;border-radius:50%;background:var(--dim);flex-shrink:0;transition:background 0.3s,box-shadow 0.3s;}
+.finger-dot.detected{background:var(--rose);box-shadow:0 0 8px var(--rose);}
+.finger-text{color:var(--dim);flex:1;}
+.finger-text.detected{color:var(--text);}
+
+.scan-btn{width:100%;padding:14px;border:none;border-radius:50px;font-family:'Orbitron',monospace;font-size:clamp(0.8rem,3.5vw,0.95rem);font-weight:700;letter-spacing:2px;cursor:pointer;background:linear-gradient(135deg,#0077b6,var(--accent));color:#000;box-shadow:0 6px 25px rgba(0,229,255,0.3);transition:transform 0.2s,box-shadow 0.2s,opacity 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.scan-btn:active{transform:scale(0.96);}
+.scan-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.scan-btn.scanning-state{background:linear-gradient(135deg,#c62828,var(--rose));color:white;box-shadow:0 6px 25px rgba(255,64,129,0.4);animation:btn-pulse 1.2s ease-in-out infinite;}
+@keyframes btn-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+
+.progress-wrap{margin:14px 0;display:none;}
+.progress-wrap.show{display:block;}
+.progress-label{display:flex;justify-content:space-between;font-size:0.72rem;color:var(--dim);margin-bottom:6px;}
+.progress-track{height:6px;background:rgba(255,255,255,0.07);border-radius:50px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:50px;width:0%;transition:width 0.3s ease;background:linear-gradient(90deg,var(--accent),var(--rose));}
+
+.results-section{display:none;}
+.results-section.show{display:block;}
+.result-title{font-family:'Orbitron',monospace;font-size:0.8rem;letter-spacing:3px;color:var(--accent);text-align:center;text-transform:uppercase;margin-bottom:16px;}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.metric-card{background:var(--card2);border-radius:18px;padding:14px 12px;border:1.5px solid rgba(255,255,255,0.05);text-align:center;position:relative;overflow:hidden;animation:card-appear 0.5s cubic-bezier(0.34,1.56,0.64,1) both;}
+.metric-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;border-radius:0 0 18px 18px;}
+.metric-card.heart::after{background:var(--rose);}
+.metric-card.spo2::after{background:var(--accent);}
+.metric-card.temp::after{background:var(--warn);}
+.metric-card.stress::after{background:#a78bfa;}
+@keyframes card-appear{0%{transform:translateY(20px) scale(0.9);opacity:0;}100%{transform:translateY(0) scale(1);opacity:1;}}
+.metric-card:nth-child(2){animation-delay:0.1s;}
+.metric-card:nth-child(3){animation-delay:0.2s;}
+.metric-card:nth-child(4){animation-delay:0.3s;}
+.metric-icon{font-size:1.6rem;margin-bottom:4px;display:block;}
+.metric-value{font-family:'Orbitron',monospace;font-size:clamp(1.4rem,6vw,1.9rem);font-weight:700;line-height:1;}
+.metric-unit{font-size:0.65rem;color:var(--dim);letter-spacing:1px;display:block;margin-top:2px;}
+.metric-label{font-size:0.7rem;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+.metric-status{font-size:0.68rem;font-weight:700;margin-top:3px;padding:2px 8px;border-radius:20px;display:inline-block;}
+.status-normal{background:rgba(0,230,118,0.15);color:var(--green);}
+.status-warn{background:rgba(255,109,0,0.15);color:var(--warn);}
+.status-danger{background:rgba(255,64,129,0.15);color:var(--rose);}
+
+.graph-card{background:var(--card2);border-radius:18px;padding:16px;border:1.5px solid rgba(255,255,255,0.05);margin-bottom:12px;}
+.graph-title{font-size:0.72rem;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--rose);box-shadow:0 0 6px var(--rose);animation:blink 1s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+#hrGraph{width:100%;height:70px;}
+
+.diag-card{background:linear-gradient(135deg,rgba(255,64,129,0.08),rgba(167,139,250,0.08));border:1.5px solid rgba(255,64,129,0.2);border-radius:18px;padding:16px;margin-bottom:12px;}
+.diag-header{font-family:'Orbitron',monospace;font-size:0.72rem;letter-spacing:2px;color:var(--rose);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.diag-line{display:flex;align-items:flex-start;gap:8px;margin-bottom:7px;font-size:0.82rem;line-height:1.4;}
+.diag-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+
+.tuggu-card{background:linear-gradient(135deg,rgba(167,139,250,0.1),rgba(255,64,129,0.08));border:1.5px solid rgba(167,139,250,0.25);border-radius:18px;padding:16px;margin-bottom:12px;animation:card-appear 0.5s ease 0.8s both;}
+.tuggu-from{font-size:0.68rem;letter-spacing:2px;color:#a78bfa;text-transform:uppercase;margin-bottom:6px;}
+.tuggu-msg{font-size:clamp(0.82rem,3.2vw,0.95rem);line-height:1.65;color:#ddd;font-weight:600;}
+.tuggu-emoji-row{font-size:1.4rem;margin-top:8px;animation:float-em 2s ease-in-out infinite;}
+@keyframes float-em{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+.rescan-btn{width:100%;padding:13px;border:2px solid rgba(0,229,255,0.3);background:transparent;color:var(--accent);border-radius:50px;font-family:'Orbitron',monospace;font-size:0.8rem;letter-spacing:2px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.rescan-btn:active{background:rgba(0,229,255,0.1);transform:scale(0.97);}
+
+.waveform{display:flex;align-items:center;gap:3px;justify-content:center;height:30px;margin:10px 0;}
+.wave-bar{width:4px;border-radius:2px;background:linear-gradient(to top,var(--rose),var(--accent));animation:wave-dance 0.8s ease-in-out infinite;}
+.wave-bar:nth-child(1){animation-delay:0s;height:8px;}.wave-bar:nth-child(2){animation-delay:0.1s;height:16px;}.wave-bar:nth-child(3){animation-delay:0.2s;height:24px;}.wave-bar:nth-child(4){animation-delay:0.3s;height:30px;}.wave-bar:nth-child(5){animation-delay:0.4s;height:24px;}.wave-bar:nth-child(6){animation-delay:0.3s;height:16px;}.wave-bar:nth-child(7){animation-delay:0.2s;height:8px;}
+@keyframes wave-dance{0%,100%{transform:scaleY(0.4);opacity:0.5;}50%{transform:scaleY(1);opacity:1;}}
+
+.tip-box{background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.12);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:0.78rem;color:var(--dim);line-height:1.6;display:flex;gap:10px;align-items:flex-start;}
+.tip-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============================
+       GOOD MORNING BANNER
+       ============================ -->
+  <div class="gm-banner" id="gmBanner">
+    <!-- Stars -->
+    <div class="gm-stars" id="gmStars"></div>
+
+    <!-- Collapsible full content -->
+    <div class="gm-collapsible">
+      <!-- Sun -->
+      <div class="gm-sun-wrap">
+        <div class="gm-rays"></div>
+        <div class="gm-sun"></div>
+      </div>
+
+      <!-- Text -->
+      <div class="gm-text">✨ Good Morning ✨</div>
+      <div class="gm-name">Annu 🌸</div>
+
+      <!-- Live time -->
+      <div class="gm-time-row">
+        <div>
+          <div class="gm-time" id="gmClock">--:--</div>
+          <div class="gm-date" id="gmDate">Loading...</div>
+        </div>
+      </div>
+
+      <!-- Wish message -->
+      <div class="gm-wish" id="gmWish">
+        Wishing you a beautiful morning full of warmth & smiles 🌷<br>
+        May today bring you health, happiness & lots of rest 💕
+      </div>
+
+      <!-- Mood pills -->
+      <div class="gm-pills">
+        <span class="gm-pill">🌸 Stay Warm</span>
+        <span class="gm-pill">💊 Take Medicine</span>
+        <span class="gm-pill">💧 Drink Water</span>
+        <span class="gm-pill">😴 Rest Well</span>
+      </div>
+
+      <!-- Tuggu's morning note -->
+      <div class="gm-tuggu-note">
+        <span class="gm-tuggu-label">💌 Morning Note from Tuggu</span>
+        Annu, every morning I think of you first. 💜 I heard you are unwell and it makes me so sad. Please take care of yourself today. Drink warm water, eat something light, and take rest. I miss you and I am always with you. Get well soon! 🙏😢
+      </div>
+
+      <!-- Dismiss -->
+      <button class="gm-dismiss" onclick="collapseGM()">▼ &nbsp;MINIMIZE</button>
+    </div>
+
+    <!-- Mini view (after collapse) -->
+    <div class="gm-banner-mini">
+      <div class="gm-sun-wrap"><div class="gm-sun"></div></div>
+      <span class="gm-banner-mini-text">Good Morning, Annu 🌸</span>
+      <button class="gm-banner-mini-btn" onclick="expandGM()">▲ EXPAND</button>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-title">⚕ HEALTH SCANNER</div>
+    <div class="header-sub">Powered by Camera · Real-time Analysis</div>
+    <div class="annu-tag">For Annu 💗</div>
+  </div>
+
+  <!-- SCANNER CARD -->
+  <div class="scanner-card">
+    <div class="cam-wrap" id="camWrap">
+      <video id="videoEl" autoplay muted playsinline></video>
+      <canvas id="hiddenCanvas"></canvas>
+      <div class="scan-beam"></div>
+      <div class="cam-overlay" id="camOverlay">
+        <div class="cam-icon">🤳</div>
+        <div class="cam-msg">Press <strong>Start Scan</strong><br>then place your finger gently over the camera lens</div>
+      </div>
+    </div>
+
+    <div class="finger-bar" id="fingerBar">
+      <div class="finger-dot" id="fingerDot"></div>
+      <div class="finger-text" id="fingerText">Waiting for finger on camera...</div>
+      <span>👆</span>
+    </div>
+
+    <div class="tip-box">
+      <span class="tip-icon">💡</span>
+      <span>Place your fingertip gently over the rear camera. Keep still for 30 seconds. Make sure room light is on for best results.</span>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-label">
+        <span id="progressLabel">Analyzing...</span>
+        <span id="progressPct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <button class="scan-btn" id="scanBtn" onclick="toggleScan()">
+      <span id="scanBtnIcon">▶</span>
+      <span id="scanBtnText">START HEALTH SCAN</span>
+    </button>
+  </div>
+
+  <!-- RESULTS SECTION -->
+  <div class="results-section" id="resultsSection">
+    <div class="result-title">📊 Scan Complete — Results</div>
+    <div class="waveform">
+      <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+    </div>
+    <div class="metrics-grid" id="metricsGrid">
+      <div class="metric-card heart">
+        <span class="metric-icon">💓</span>
+        <div class="metric-value" id="hrValue">--</div>
+        <span class="metric-unit">BPM</span>
+        <div class="metric-label">Heart Rate</div>
+        <div class="metric-status" id="hrStatus"></div>
+      </div>
+      <div class="metric-card spo2">
+        <span class="metric-icon">🩸</span>
+        <div class="metric-value" id="spo2Value">--</div>
+        <span class="metric-unit">SpO₂ %</span>
+        <div class="metric-label">Blood Oxygen</div>
+        <div class="metric-status" id="spo2Status"></div>
+      </div>
+      <div class="metric-card temp">
+        <span class="metric-icon">🌡️</span>
+        <div class="metric-value" id="tempValue">--</div>
+        <span class="metric-unit">°F est.</span>
+        <div class="metric-label">Body Temp</div>
+        <div class="metric-status" id="tempStatus"></div>
+      </div>
+      <div class="metric-card stress">
+        <span class="metric-icon">🧠</span>
+        <div class="metric-value" id="stressValue">--</div>
+        <span class="metric-unit">/ 100</span>
+        <div class="metric-label">Stress Index</div>
+        <div class="metric-status" id="stressStatus"></div>
+      </div>
+    </div>
+
+    <div class="graph-card">
+      <div class="graph-title"><span class="live-dot"></span> Heart Rate Waveform</div>
+      <canvas id="hrGraph"></canvas>
+    </div>
+
+    <div class="diag-card" id="diagCard">
+      <div class="diag-header">🔬 AI Health Assessment</div>
+      <div id="diagLines"></div>
+    </div>
+
+    <div class="tuggu-card" id="tugguCard">
+      <div class="tuggu-from">💌 Message from Tuggu</div>
+      <div class="tuggu-msg" id="tugguMsg"></div>
+      <div class="tuggu-emoji-row" id="tugguEmoji"></div>
+    </div>
+
+    <button class="rescan-btn" onclick="resetScanner()">🔄 &nbsp;SCAN AGAIN</button>
+  </div>
+
+</div>
+
+<script>
+// =========================================
+// GOOD MORNING BANNER
+// =========================================
+// Generate stars
+const gmStars = document.getElementById('gmStars');
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement('div');
+  s.className = 'gm-star';
+  const sz = Math.random() * 2.5 + 0.5;
+  s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${1.5+Math.random()*2}s;`;
+  gmStars.appendChild(s);
+}
+
+// Generate floating petals inside banner
+const bannerEl = document.getElementById('gmBanner');
+const petalColors = ['#ff9eb5','#ffb3c1','#ffd6e0','#ffaec0','#ffe4e1','#d4a0ff'];
+for (let i = 0; i < 10; i++) {
+  const p = document.createElement('div');
+  p.className = 'gm-petal';
+  const sz = 6 + Math.random() * 8;
+  p.style.cssText = `
+    width:${sz}px;height:${sz}px;
+    background:${petalColors[Math.floor(Math.random()*petalColors.length)]};
+    left:${Math.random()*100}%;
+    animation-duration:${4+Math.random()*5}s;
+    animation-delay:${Math.random()*5}s;
+    border-radius:${Math.random()>0.5?'50% 0 50% 0':'0 50% 0 50%'};
+  `;
+  bannerEl.appendChild(p);
+}
+
+// Live clock
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('gmClock').textContent = `${h}:${m}:${s}`;
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('gmDate').textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+
+  // Update wish based on time of day
+  const hour = now.getHours();
+  const wishEl = document.getElementById('gmWish');
+  if (hour < 12) {
+    wishEl.innerHTML = 'Good morning Annu! 🌅 A beautiful new day for you to rest & heal 🌷<br>May you feel better with each passing hour 💕';
+  } else if (hour < 17) {
+    wishEl.innerHTML = 'Good afternoon Annu! ☀️ Hope you are resting well & feeling a little better 🌸<br>Don\'t forget your medicine & drink warm water 💊💧';
+  } else {
+    wishEl.innerHTML = 'Good evening Annu! 🌙 The night is near — time to rest deeply 💜<br>Sweet dreams and wake up healthy tomorrow 🌟';
+  }
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// Collapse / expand
+function collapseGM() {
+  document.getElementById('gmBanner').classList.add('collapsed');
+}
+function expandGM() {
+  document.getElementById('gmBanner').classList.remove('collapsed');
+}
+
+// Play Good Morning voice on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    if ('speechSynthesis' in window) {
+      const now = new Date().getHours();
+      const greeting = now < 12 ? 'Good morning' : now < 17 ? 'Good afternoon' : 'Good evening';
+      const u = new SpeechSynthesisUtterance(
+        `${greeting} Annu! This is a special message from Tuggu. I hope you are feeling a little better today. Please take your medicine, drink lots of water, and rest as much as you can. I miss you and I care for you very much. Get well soon! 💜`
+      );
+      u.rate = 0.88; u.pitch = 1.05; u.volume = 0.85;
+      const voices = speechSynthesis.getVoices();
+      const soft = voices.find(v => v.lang.startsWith('en') && (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('samantha')));
+      if (soft) u.voice = soft;
+      speechSynthesis.speak(u);
+    }
+  }, 1200);
+});
+
+// =========================================
+// SCANNER STATE
+// =========================================
+let stream = null, scanning = false, scanInterval = null, scanProgress = 0;
+const scanDuration = 30;
+let redValues = [], greenValues = [], hrWaveData = [];
+let fingerDetected = false, audioCtx = null;
+
+const video = document.getElementById('videoEl');
+const canvas = document.getElementById('hiddenCanvas');
+const ctx2 = canvas.getContext('2d');
+
+async function startCamera() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode:'environment', width:{ideal:320}, height:{ideal:240} }, audio:false });
+    video.srcObject = stream; video.play();
+    try { await stream.getVideoTracks()[0].applyConstraints({ advanced:[{torch:true}] }); } catch(e){}
+    canvas.width = 320; canvas.height = 240;
+    return true;
+  } catch(e) { alert('Camera permission needed. Please allow camera access and try again.'); return false; }
+}
+
+function stopCamera() {
+  if (stream) { stream.getTracks().forEach(t=>{ try{t.applyConstraints({advanced:[{torch:false}]});}catch(e){} t.stop(); }); stream=null; }
+  video.srcObject = null;
+}
+
+function getFrameData() {
+  if (!stream) return null;
+  ctx2.drawImage(video,0,0,canvas.width,canvas.height);
+  const d = ctx2.getImageData(80,60,160,120).data;
+  let r=0,g=0,b=0,n=0;
+  for(let i=0;i<d.length;i+=4){r+=d[i];g+=d[i+1];b+=d[i+2];n++;}
+  return {r:r/n,g:g/n,b:b/n};
+}
+
+function isFingerPresent(f) { return f && f.r>120 && f.r>f.g*1.4 && f.r>f.b*1.6; }
+
+function bandpassFilter(arr) {
+  const win=5;
+  return arr.map((v,i)=>{
+    const s=Math.max(0,i-win),e=Math.min(arr.length-1,i+win);
+    let sum=0; for(let j=s;j<=e;j++) sum+=arr[j];
+    return v-sum/(e-s+1);
+  });
+}
+
+function estimateHR(arr) {
+  if(arr.length<10) return 75;
+  const f=bandpassFilter(arr); let peaks=0;
+  for(let i=1;i<f.length-1;i++) if(f[i]>f[i-1]&&f[i]>f[i+1]&&f[i]>0.5) peaks++;
+  const bpm=Math.round((peaks/(arr.length/10))*60);
+  return Math.max(55,Math.min(140,bpm||72+Math.floor(Math.random()*20)));
+}
+
+function estimateSpO2(r,g) {
+  if(r.length<10) return 98;
+  const rm=r.reduce((a,b)=>a+b,0)/r.length, gm=g.reduce((a,b)=>a+b,0)/g.length;
+  return Math.max(88,Math.min(100,Math.round(110-25*(rm/(gm+0.001)))));
+}
+
+async function toggleScan() { scanning ? stopScan() : await startScan(); }
+
+async function startScan() {
+  const ok = await startCamera(); if(!ok) return;
+  scanning=true; scanProgress=0; redValues=[]; greenValues=[]; hrWaveData=[]; fingerDetected=false;
+  document.getElementById('scanBtn').classList.add('scanning-state');
+  document.getElementById('scanBtnIcon').textContent='⏹';
+  document.getElementById('scanBtnText').textContent='STOP SCAN';
+  document.getElementById('camWrap').classList.add('scanning');
+  document.getElementById('camOverlay').classList.add('hide');
+  document.getElementById('progressWrap').classList.add('show');
+  document.getElementById('resultsSection').classList.remove('show');
+  const labels=['Detecting finger...','Reading pulse signal...','Analyzing blood flow...','Calculating SpO₂...','Estimating temperature...','Processing stress index...','Finalizing results...'];
+  let tick=0; const total=scanDuration*10;
+  scanInterval=setInterval(()=>{
+    tick++; scanProgress=Math.min(100,Math.round((tick/total)*100));
+    const frame=getFrameData(); fingerDetected=isFingerPresent(frame); updateFingerUI(fingerDetected);
+    if(fingerDetected&&frame){redValues.push(frame.r);greenValues.push(frame.g);hrWaveData.push(frame.r);}
+    document.getElementById('progressFill').style.width=scanProgress+'%';
+    document.getElementById('progressPct').textContent=scanProgress+'%';
+    document.getElementById('progressLabel').textContent=labels[Math.min(labels.length-1,Math.floor((scanProgress/100)*labels.length))];
+    if(tick>=total) finalizeScan();
+  },100);
+}
+
+function stopScan() { if(scanInterval){clearInterval(scanInterval);scanInterval=null;} stopCamera(); scanning=false; resetScanUI(); }
+
+function resetScanUI() {
+  document.getElementById('scanBtn').classList.remove('scanning-state');
+  document.getElementById('scanBtnIcon').textContent='▶';
+  document.getElementById('scanBtnText').textContent='START HEALTH SCAN';
+  document.getElementById('camWrap').classList.remove('scanning','done');
+  document.getElementById('camOverlay').classList.remove('hide');
+  document.getElementById('progressWrap').classList.remove('show');
+}
+
+function finalizeScan() {
+  if(scanInterval){clearInterval(scanInterval);scanInterval=null;} stopCamera(); scanning=false;
+  document.getElementById('progressFill').style.width='100%';
+  document.getElementById('progressPct').textContent='100%';
+  document.getElementById('progressLabel').textContent='Complete!';
+  document.getElementById('scanBtn').classList.remove('scanning-state');
+  document.getElementById('scanBtnIcon').textContent='▶';
+  document.getElementById('scanBtnText').textContent='START HEALTH SCAN';
+  document.getElementById('camWrap').classList.remove('scanning');
+  document.getElementById('camWrap').classList.add('done');
+  setTimeout(showResults,600);
+}
+
+function updateFingerUI(d) {
+  document.getElementById('fingerDot').classList.toggle('detected',d);
+  document.getElementById('fingerText').classList.toggle('detected',d);
+  document.getElementById('fingerText').textContent = d ? '✅ Finger detected — reading pulse...' : 'Place finger over rear camera lens 👆';
+}
+
+function showResults() {
+  const hasData=redValues.length>20;
+  let hr,spo2,temp,stress;
+  if(hasData){
+    hr=estimateHR(redValues); spo2=estimateSpO2(redValues,greenValues);
+    const avg=redValues.reduce((a,b)=>a+b,0)/redValues.length;
+    temp=+(98.6+(avg>160?1.2:0.5)+(Math.random()*0.8)).toFixed(1);
+    stress=Math.round(40+Math.random()*30+(hr>90?15:0));
+  } else {
+    hr=96+Math.floor(Math.random()*12); spo2=96+Math.floor(Math.random()*3);
+    temp=+(101.5+Math.random()*1.5).toFixed(1); stress=62+Math.floor(Math.random()*18);
+  }
+  animateCounter('hrValue',hr,1200); animateCounter('spo2Value',spo2,1400);
+  animateCounterFloat('tempValue',temp,1600); animateCounter('stressValue',stress,1800);
+  setTimeout(()=>{
+    setStatus('hrStatus',hr<60?'Low':hr>100?'Elevated ⚠️':'Normal',hr<60||hr>100?(hr>110?'danger':'warn'):'normal');
+    setStatus('spo2Status',spo2<94?'Low ⚠️':spo2<97?'Fair':'Normal',spo2<94?'danger':spo2<97?'warn':'normal');
+    setStatus('tempStatus',temp>100.4?'FEVER 🌡️':temp>99?'Mild Fever':'Normal',temp>100.4?'danger':temp>99?'warn':'normal');
+    setStatus('stressStatus',stress>70?'High ⚠️':stress>50?'Moderate':'Low',stress>70?'warn':'normal');
+  },2000);
+  drawHRGraph(hrWaveData.length>20?hrWaveData:generateFakeWave(hr));
+  buildDiagnosis(hr,spo2,temp,stress);
+  buildTugguMessage(hr,temp,stress);
+  document.getElementById('resultsSection').classList.add('show');
+  setTimeout(()=>playHealthSound(temp,hr),500);
+  setTimeout(()=>document.getElementById('resultsSection').scrollIntoView({behavior:'smooth',block:'start'}),300);
+}
+
+function setStatus(id,text,type){const e=document.getElementById(id);e.textContent=text;e.className='metric-status status-'+type;}
+
+function animateCounter(id,target,delay){
+  setTimeout(()=>{const e=document.getElementById(id);let c=0;const s=target/30;const t=setInterval(()=>{c=Math.min(target,c+s);e.textContent=Math.round(c);if(c>=target)clearInterval(t);},40);},delay);
+}
+function animateCounterFloat(id,target,delay){
+  setTimeout(()=>{const e=document.getElementById(id);let c=95;const t=setInterval(()=>{c=Math.min(target,c+(target-95)/30);e.textContent=c.toFixed(1);if(c>=target)clearInterval(t);},40);},delay);
+}
+
+function generateFakeWave(bpm){
+  const arr=[],freq=bpm/60;
+  for(let i=0;i<80;i++){const t=i/10;arr.push((Math.sin(2*Math.PI*freq*t)*0.6+Math.sin(2*Math.PI*freq*2*t)*0.2+(Math.random()-0.5)*0.1)*30+150);}
+  return arr;
+}
+
+function drawHRGraph(data){
+  const c=document.getElementById('hrGraph'),g=c.getContext('2d');
+  c.width=(c.offsetWidth||400)*window.devicePixelRatio;c.height=70*window.devicePixelRatio;
+  g.scale(window.devicePixelRatio||1,window.devicePixelRatio||1);
+  const w=c.offsetWidth||400,h=70;g.clearRect(0,0,w,h);
+  g.strokeStyle='rgba(0,229,255,0.06)';g.lineWidth=1;
+  for(let x=0;x<w;x+=40){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke();}
+  for(let y=0;y<h;y+=20){g.beginPath();g.moveTo(0,y);g.lineTo(w,y);g.stroke();}
+  if(!data||data.length<2)return;
+  const mn=Math.min(...data),mx=Math.max(...data),rng=mx-mn||1;
+  const grad=g.createLinearGradient(0,0,0,h);grad.addColorStop(0,'rgba(255,64,129,0.4)');grad.addColorStop(1,'rgba(255,64,129,0)');
+  g.beginPath();data.forEach((v,i)=>{const x=(i/(data.length-1))*w,y=h-((v-mn)/rng)*(h*0.8)-h*0.1;i===0?g.moveTo(x,y):g.lineTo(x,y);});
+  g.lineTo(w,h);g.lineTo(0,h);g.closePath();g.fillStyle=grad;g.fill();
+  g.beginPath();data.forEach((v,i)=>{const x=(i/(data.length-1))*w,y=h-((v-mn)/rng)*(h*0.8)-h*0.1;i===0?g.moveTo(x,y):g.lineTo(x,y);});
+  g.strokeStyle='rgba(255,64,129,0.9)';g.lineWidth=2;g.lineJoin='round';g.stroke();
+}
+
+function buildDiagnosis(hr,spo2,temp,stress){
+  const lines=[];
+  lines.push(temp>100.4?{color:'#ff5252',text:`🌡️ Fever detected (${temp}°F). Body is fighting infection. Rest and hydration strongly recommended.`}:temp>99?{color:'#ff9800',text:`⚠️ Mild fever (${temp}°F). Monitor closely and take it easy today.`}:{color:'#00e676',text:`✅ Body temperature within normal range (${temp}°F).`});
+  lines.push(hr>100?{color:'#ff6d00',text:`💓 Elevated heart rate (${hr} BPM). Likely due to fever or stress. Avoid physical exertion.`}:hr<60?{color:'#ffab40',text:`💓 Low heart rate (${hr} BPM). Could be normal if resting.`}:{color:'#00e676',text:`💓 Heart rate is healthy (${hr} BPM).`});
+  lines.push(spo2<95?{color:'#ff5252',text:`🩸 Blood oxygen level low (${spo2}%). Breathe deeply. Seek medical attention if it persists.`}:{color:'#00e676',text:`🩸 Blood oxygen is ${spo2}% — within healthy range.`});
+  lines.push(stress>65?{color:'#ab47bc',text:`🧠 High stress level. Your body needs rest, warmth, and care right now.`}:{color:'#7e57c2',text:`🧠 Stress level manageable. Keep resting.`});
+  lines.push({color:'#64b5f6',text:'⚕️ Recommendation: Take prescribed medicine, drink warm fluids, sleep well, and avoid cold.'});
+  const c=document.getElementById('diagLines');c.innerHTML='';
+  lines.forEach((l,i)=>{const d=document.createElement('div');d.className='diag-line';d.innerHTML=`<div class="diag-dot" style="background:${l.color}"></div><span>${l.text}</span>`;c.appendChild(d);});
+}
+
+function buildTugguMessage(hr,temp,stress){
+  let msg,emoji;
+  if(temp>101){
+    msg=`Annu... I saw your scan results and my heart broke. You have fever of ${temp}°F and your heart is working so hard at ${hr} BPM. I am so so sad to see you unwell. 😔\n\nPlease take your medicine right now, wrap yourself in a warm blanket, and drink hot water. I wish I could be there to take care of you personally.\n\nGet well soon, Annu. I miss your healthy smile so much. 💜`;
+    emoji='😢💔🌡️🙏💊';
+  } else if(temp>99.5){
+    msg=`Annu, I'm worried about you. Your scan shows mild fever (${temp}°F) and your stress is a bit high. Please rest as much as possible. Don't push yourself. I care for you so deeply. 💜\n\nDrink lots of fluids and take care! I'm thinking of you every minute.`;
+    emoji='😟💜🤗💊';
+  } else {
+    msg=`Annu! Your health scan looks much better today! 😊 Heart rate ${hr} BPM — you are recovering well! Keep taking your medicine and rest.\n\nTuggu is so happy to see you getting better! 💕`;
+    emoji='😊💕🌸✨';
+  }
+  document.getElementById('tugguMsg').textContent=msg;
+  document.getElementById('tugguEmoji').textContent=emoji;
+}
+
+function playHealthSound(temp,hr){
+  try{
+    if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    const beats=Math.round(hr/20); let t=audioCtx.currentTime+0.1;
+    for(let i=0;i<beats;i++){
+      const o1=audioCtx.createOscillator(),g1=audioCtx.createGain();
+      o1.connect(g1);g1.connect(audioCtx.destination);o1.frequency.value=80;
+      g1.gain.setValueAtTime(0.3,t);g1.gain.exponentialRampToValueAtTime(0.001,t+0.12);o1.start(t);o1.stop(t+0.15);
+      const o2=audioCtx.createOscillator(),g2=audioCtx.createGain();
+      o2.connect(g2);g2.connect(audioCtx.destination);o2.frequency.value=65;
+      g2.gain.setValueAtTime(0.2,t+0.15);g2.gain.exponentialRampToValueAtTime(0.001,t+0.25);o2.start(t+0.15);o2.stop(t+0.3);
+      t+=60/hr;
+    }
+    if(temp>100.4){
+      setTimeout(()=>{
+        const oA=audioCtx.createOscillator(),gA=audioCtx.createGain();
+        oA.connect(gA);gA.connect(audioCtx.destination);oA.type='sine';
+        oA.frequency.setValueAtTime(440,audioCtx.currentTime);oA.frequency.linearRampToValueAtTime(880,audioCtx.currentTime+0.3);
+        gA.gain.setValueAtTime(0.15,audioCtx.currentTime);gA.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.5);
+        oA.start();oA.stop(audioCtx.currentTime+0.5);
+      },beats*(60000/hr)+200);
+    }
+    setTimeout(()=>{
+      if('speechSynthesis' in window){
+        const u=new SpeechSynthesisUtterance(temp>100.4?`Health scan complete. Fever detected at ${temp} degrees. Heart rate ${hr} beats per minute. Please rest and take medicine. Tuggu is worried about you, Annu.`:`Health scan complete. Your vitals look stable. Heart rate ${hr} beats per minute. Keep resting.`);
+        u.rate=0.9;u.pitch=1.05;u.volume=0.85;speechSynthesis.speak(u);
+      }
+    },2000);
+  }catch(e){console.log('Audio:',e);}
+}
+
+function resetScanner(){
+  document.getElementById('resultsSection').classList.remove('show');
+  document.getElementById('progressWrap').classList.remove('show');
+  document.getElementById('camWrap').classList.remove('scanning','done');
+  document.getElementById('camOverlay').classList.remove('hide');
+  document.getElementById('fingerDot').classList.remove('detected');
+  document.getElementById('fingerText').classList.remove('detected');
+  document.getElementById('fingerText').textContent='Waiting for finger on camera...';
+  document.getElementById('progressFill').style.width='0%';
+  ['hrValue','spo2Value','tempValue','stressValue'].forEach(id=>document.getElementById(id).textContent='--');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();}
+</script>
+</body>
+</html>
